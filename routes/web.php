@@ -12,7 +12,8 @@ Route::get('/whoami', function (){
 });
 
 
-Route::get('/products/filter/{Brand?}', [ProductController::class, 'filter'])->name('products.filter');;
+Route::get('/products/filter/{Brand?}', [ProductController::class, 'filter'])
+->name('products.filter');
 
 Route::resource('products', ProductController::class)
 ->except(['create', 'store', 'edit', 'update', 'destroy']);;

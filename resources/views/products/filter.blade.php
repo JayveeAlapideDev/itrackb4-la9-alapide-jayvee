@@ -26,7 +26,7 @@
             <th>Price</th>
             <th>Stock</th>
             <th>Brand</th>
-            <th>Available</th>
+            <th>Package</th>
         </tr>
  
         @forelse ($products as $product)
@@ -38,7 +38,7 @@
                 <td>{{ $product['price'] }}</td>
                 <td>{{ $product['stock'] }}</td>
                 <td>{{ $product['brand'] }}</td>
-                <td>{{ $product['is_available'] ? 'Yes' : 'No' }}</td>
+                <td>{{ $product['package'] }}</td>
                 
             </tr>
             @empty

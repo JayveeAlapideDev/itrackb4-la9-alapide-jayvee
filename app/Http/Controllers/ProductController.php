@@ -13,9 +13,36 @@ class ProductController extends Controller
 
         return view('products.show', ['product'=> $featured]);
     }
-    public function index()
+    public function index(Request $request)
     {
-       return view('products.index', ['products'=> $this -> products()]);
+       $brand = $request->query('brand', 'all');
+       $package = $request->query('package', 'all');
+
+       $all = $this->products();
+
+       if($brand === 'all'&&$package === 'all')
+        {
+            $products = $all;
+        }
+        else{
+            $products =[];
+
+        foreach($all as $id => $product)
+            {
+                $brands = ($brand === 'all'|| $product['brand'] ===$brand);
+                $packages = ($package ==='all' || $product['package'] ===$package);
+
+                if ($brands && $packages){
+                    $products[$id] = $product;
+                }
+                }
+            }
+        
+
+       return view('products.index',
+       ['products' => $products,
+       'brand' => $brand,
+       'package' => $package,]);
     }
 
     /**
@@ -91,12 +118,12 @@ class ProductController extends Controller
 
     private function products(){
         return [
-            1 => ['id' => 1,'name'=> 'Shampoo', 'price' => 10, 'stock'=> 50, 'brand' => 'sunsilk', 'is_available' => true],
-            2 => ['id' => 2,'name'=> 'stick-O', 'price' => 100, 'stock'=> 20, 'brand' => 'choco', 'is_available' => true],
-            3 => ['id' => 3,'name'=> 'smart', 'price' => 50, 'stock'=> 30, 'brand' => 'dishwashing', 'is_available' => false],
-            4 => ['id' => 4,'name'=> 'joy', 'price' => 20, 'stock' => 40, 'brand' => 'dishwashing', 'is_available' => true],
-            5 => ['id' => 5,'name'=> 'coffee', 'price' => 60, 'stock' => 70, 'brand' => 'nescafe', 'is_available' => false],
-            6 => ['id' => 6,'name' => 'lollipop', 'price' => 80, 'stock' => 9, 'brand' => 'mint', 'is_available' => true],
+            1 => ['id' => 1,'name'=> 'Shampoo', 'price' => 10, 'stock'=> 50, 'brand' => 'sunsilk', 'package' => 'bottle'],
+            2 => ['id' => 2,'name'=> 'stick-O', 'price' => 100, 'stock'=> 20, 'brand' => 'choco', 'package' => 'plastic'],
+            3 => ['id' => 3,'name'=> 'smart', 'price' => 50, 'stock'=> 30, 'brand' => 'dishwashing', 'package' => 'pack'],
+            4 => ['id' => 4,'name'=> 'joy', 'price' => 20, 'stock' => 40, 'brand' => 'dishwashing', 'package' => 'pack'],
+            5 => ['id' => 5,'name'=> 'coffee', 'price' => 60, 'stock' => 70, 'brand' => 'nescafe', 'package' => 'sachet'],
+            6 => ['id' => 6,'name' => 'lollipop', 'price' => 80, 'stock' => 9, 'brand' => 'mint', 'package' => 'stick'],
         ];
     }
 }

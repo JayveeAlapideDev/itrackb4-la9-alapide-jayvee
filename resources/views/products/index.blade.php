@@ -31,7 +31,7 @@
 <nav>
    <h3>SHOW BY PACKAGE</h3>
         <a href="{{ route('products.index') }}">ALL</a> |
-        <a href="{{ route('products.index',['package' => 'bottle' ]) }}">BOTTLE</a> |
+        <a href="{{ route('products.index',['package' => 'bottle' ]) }}">BOTTLED</a> |
         <a href="{{ route('products.index',['package' => 'plastic' ]) }}">PLASTIC</a> |
         <a href="{{ route('products.index',['package' => 'pack' ]) }}">PACK</a> |
         <a href="{{ route('products.index',['package' => 'sachet' ]) }}">SACHET</a> |

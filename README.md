@@ -1,5 +1,4 @@
 QUESTION
-Q1. Because the index is already included on a route resource which is inside of the Controller
-Q2.The url on year 4 only, no course filter is look like query, but the result is the same on the  filter route
-Q3.The detail page needed no change. Highlighting nav based on the current route  checking if the active route name is products.show still works exactly as before, because navigating to a detail page is a genuinely different route (/products/{brand}) the active-link check was already comparing against route names or path prefixes, and that comparison is untouched by query strings.
-Q4.
+Q1.When you refresh a page, the browser repeats the last request it made. If a GET request were used to save a record, every refresh, back-button visit, or reopened bookmark would quietly save it again and create a duplicate.
+Q2.Laravel's exception handler catches the exception and turns it into a redirect back to the previous URL, which is the form page. Before redirecting, it flashes the error messages (available as $errors) and the submitted input (available through old()) to the session. As a result, the visitor lands back on the form, sees the error messages, and finds everything they typed still filled in.
+Q3.The message is flash data, which means it is stored in the session for the next request only. When the controller runs redirect()->...->with('success', '...'), the message is saved to the session, the browser follows the redirect, and the layout renders the message on that one page. Laravel then removes it from the session.

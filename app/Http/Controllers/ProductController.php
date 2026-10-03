@@ -44,13 +44,23 @@ class ProductController extends Controller
        'brand' => $brand,
        'package' => $package,]);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
+    private function products()
+    {
+    $path = storage_path('app/products.json');
+    
+    return json_decode(file_get_contents($path), true);
+    }
+    private function saveProducts($products)
+    {
+        file_put_contents(
+            storage_path('app/products.json'),
+            json_encode($products, JSON_PRETTY_PRINT)
+        );
+    }
+    
     public function create()
     {
-        //
+        return view('products.create');
     }
 
     /**
@@ -58,7 +68,31 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $validated = $request->validate([
+        'name' => 'required|max:100',
+        'price' => 'required|numeric|min:1|max:1000',
+        'stock' => 'required|numeric|max:1000',
+        'brand' => 'required|in:sunsilk,choco,dishwashing,nescafe,mint',
+        'package' => 'required|in:bottle,plastic,pack,sachet,stick'
+      ]);
+
+      $products = $this->products();
+      $id = max(array_keys($products)) +1;
+
+      $products[$id] = [
+        'id' => $id,
+        'name' => $request->input('name'),
+        'price' => $request->input('price'),
+        'stock' => $request->input('stock'),
+        'brand' => $request->input('brand'),
+        'package' => $request->input('package'),
+      ];
+
+      $this->saveProducts($products);
+
+      return redirect()
+      ->route('products.index')
+      ->with('success', 'product added successfully');
     }
 
     /**
@@ -96,34 +130,5 @@ class ProductController extends Controller
     public function destroy(string $id)
     {
         //
-    }
-
-    public function filter($brand = null)
-    {
-      $all = $this->products();
-       
-      if ($brand === null) {
-        $products = $all;
-      } else {
-        $products = [];
-      
-     foreach ($all as $id => $product) {
-        if ($product['brand'] == $brand) {
-            $products[$id] = $product;
-        }
-      }
-    }
-    return view('products.filter', ['products' => $products, 'brand' => $brand,]);
-    }
-
-    private function products(){
-        return [
-            1 => ['id' => 1,'name'=> 'Shampoo', 'price' => 10, 'stock'=> 50, 'brand' => 'sunsilk', 'package' => 'bottle'],
-            2 => ['id' => 2,'name'=> 'stick-O', 'price' => 100, 'stock'=> 20, 'brand' => 'choco', 'package' => 'plastic'],
-            3 => ['id' => 3,'name'=> 'smart', 'price' => 50, 'stock'=> 30, 'brand' => 'dishwashing', 'package' => 'pack'],
-            4 => ['id' => 4,'name'=> 'joy', 'price' => 20, 'stock' => 40, 'brand' => 'dishwashing', 'package' => 'pack'],
-            5 => ['id' => 5,'name'=> 'coffee', 'price' => 60, 'stock' => 70, 'brand' => 'nescafe', 'package' => 'sachet'],
-            6 => ['id' => 6,'name' => 'lollipop', 'price' => 80, 'stock' => 9, 'brand' => 'mint', 'package' => 'stick'],
-        ];
     }
 }

@@ -3,9 +3,12 @@
 @section('title', 'All Products')
 @section('content')
 
-
+<div class="d-flex justify-content-between align-items-center mb-3">
  <h3>Products in my Store</h3>
     <p>Prepared by: Jayvee Espanola Alapide</p>
+
+<a href="{{ route('products.create') }}" class="btn btn-primary">+Add Product</a>
+</div>
  
 @if ($brand === 'all' && $package === 'all')
     <p>Show all product</p>

@@ -1,4 +1,6 @@
 QUESTION
-Q1.When you refresh a page, the browser repeats the last request it made. If a GET request were used to save a record, every refresh, back-button visit, or reopened bookmark would quietly save it again and create a duplicate.
-Q2.Laravel's exception handler catches the exception and turns it into a redirect back to the previous URL, which is the form page. Before redirecting, it flashes the error messages (available as $errors) and the submitted input (available through old()) to the session. As a result, the visitor lands back on the form, sees the error messages, and finds everything they typed still filled in.
-Q3.The message is flash data, which means it is stored in the session for the next request only. When the controller runs redirect()->...->with('success', '...'), the message is saved to the session, the browser follows the redirect, and the layout renders the message on that one page. Laravel then removes it from the session.
+F1. I made the price column nullable because the price may not be decided yet. This lets me save the product first and leave the price empty until I have set it. I made the price column nullable because the price may not be decided yet. This lets me save the product first and leave the price empty until I have set it.
+
+F2. The first step that failed was Part B. In Tinker, I was missing some quotation marks and had an unexpected dot (.) in my command, so the command gave an error. I had to retype it several times until it ran correctly.
+
+F3.the variable names $products and $product are exactly what the old controller passed to the Blade files, so the views keep working with no edits.

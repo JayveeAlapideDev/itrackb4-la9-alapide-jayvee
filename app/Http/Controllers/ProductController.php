@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -15,34 +16,9 @@ class ProductController extends Controller
     }
     public function index(Request $request)
     {
-       $brand = $request->query('brand', 'all');
-       $package = $request->query('package', 'all');
+        $products = Product::all();
+    return view('products.index', compact('products'));
 
-       $all = $this->products();
-
-       if($brand === 'all'&&$package === 'all')
-        {
-            $products = $all;
-        }
-        else{
-            $products =[];
-
-        foreach($all as $id => $product)
-            {
-                $brands = ($brand === 'all'|| $product['brand'] ===$brand);
-                $packages = ($package ==='all' || $product['package'] ===$package);
-
-                if ($brands && $packages){
-                    $products[$id] = $product;
-                }
-                }
-            }
-        
-
-       return view('products.index',
-       ['products' => $products,
-       'brand' => $brand,
-       'package' => $package,]);
     }
     private function products()
     {
@@ -100,14 +76,9 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-     $products = $this->products();
+      $products = Product::findOrFail($id);
+    return view('products.show', compact('products'));
 
-        if(!isset($products[$id]))
-            {
-                abort(404);
-            }
-
-        return view('products.show', ['product' => $products[$id]]);
     }
 
     

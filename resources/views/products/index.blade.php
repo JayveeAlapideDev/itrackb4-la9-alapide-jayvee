@@ -10,15 +10,6 @@
 <a href="{{ route('products.create') }}" class="btn btn-primary">+Add Product</a>
 </div>
  
-@if ($brand === 'all' && $package === 'all')
-    <p>Show all product</p>
-@elseif ($brand !== 'all' && $package !== 'all')
-    <p>Showing products brand: {{$brand}} with package {{ $package }}</p>
-@elseif($brand !== 'all')
-<p>Showing products brand: {{$brand}}</p>
-@elseif ($package !== 'all')
-<p>Showing products package:{{ $package}}</p>
-@endif
  
 
 <nav>
